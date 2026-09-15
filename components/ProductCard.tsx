@@ -1,9 +1,22 @@
+"use client";
+
+import { useState } from "react";
 import { ProductImage } from "@/components/ProductImage";
 import { PlusIcon } from "@/components/icons";
 import { formatPrice } from "@/lib/format";
+import { useCart } from "@/lib/cart-context";
 import type { Product } from "@/lib/types";
 
 export function ProductCard({ product }: { product: Product }) {
+  const { addItem } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
+
+  function handleAdd() {
+    addItem(product);
+    setJustAdded(true);
+    setTimeout(() => setJustAdded(false), 1200);
+  }
+
   return (
     <div className="flex gap-3 rounded-xl border border-bear-border bg-bear-surface p-3">
       <ProductImage
@@ -30,10 +43,15 @@ export function ProductCard({ product }: { product: Product }) {
           </span>
           <button
             type="button"
-            className="flex items-center gap-1 rounded-full bg-bear-primary px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white transition hover:bg-bear-primary-dark"
+            onClick={handleAdd}
+            className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-white transition ${
+              justAdded
+                ? "bg-green-600"
+                : "bg-bear-primary hover:bg-bear-primary-dark"
+            }`}
           >
-            Agregar
-            <PlusIcon />
+            {justAdded ? "Agregado ✓" : "Agregar"}
+            {!justAdded && <PlusIcon />}
           </button>
         </div>
       </div>

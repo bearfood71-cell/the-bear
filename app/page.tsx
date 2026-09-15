@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { CartIcon, MenuIconGlyph, PinIcon } from "@/components/icons";
+import { useCart } from "@/lib/cart-context";
 
 export default function HomePage() {
+  const { totalItems } = useCart();
+
   return (
     <main className="relative flex min-h-screen flex-col overflow-hidden bg-bear-bg px-6 pb-10 pt-6">
       {/* Resplandor decorativo de fondo */}
@@ -15,8 +20,13 @@ export default function HomePage() {
         <button type="button" aria-label="Abrir menú" className="text-white">
           <MenuIconGlyph />
         </button>
-        <Link href="/carrito" aria-label="Ver carrito" className="text-white">
+        <Link href="/carrito" aria-label="Ver carrito" className="relative text-white">
           <CartIcon />
+          {totalItems > 0 && (
+            <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-bear-primary px-1 text-[10px] font-bold text-white">
+              {totalItems}
+            </span>
+          )}
         </Link>
       </div>
 

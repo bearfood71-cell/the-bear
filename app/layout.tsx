@@ -7,6 +7,7 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "./globals.css";
+import { CartProvider } from "@/lib/cart-context";
 
 export const metadata: Metadata = {
   title: "THE BEAR | Hecho para antojar",
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body className="min-h-screen bg-bear-bg font-sans text-white antialiased">
-        {children}
+        <CartProvider>{children}</CartProvider>
       </body>
     </html>
   );
