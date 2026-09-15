@@ -1,10 +1,10 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 
-// Cliente de Supabase para usar en Client Components (navegador).
-// Solo puede leer datos públicos gracias a las políticas RLS.
-export function createBrowserClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-  return createClient(url, anonKey);
+// Cliente de Supabase para Client Components (navegador).
+// Si hay sesión de admin iniciada, sus peticiones van autenticadas.
+export function createClient() {
+  return createBrowserClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
 }

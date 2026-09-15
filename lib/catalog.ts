@@ -1,4 +1,4 @@
-import { createServerClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/server";
 import type { CategoryWithProducts } from "@/lib/types";
 
 // Trae todas las categorías con sus productos activos, ordenados.
@@ -6,7 +6,7 @@ import type { CategoryWithProducts } from "@/lib/types";
 // devuelve una lista vacía en vez de romper la página.
 export async function getCatalog(): Promise<CategoryWithProducts[]> {
   try {
-    const supabase = createServerClient();
+    const supabase = createClient();
 
     const { data: categories, error: categoriesError } = await supabase
       .from("categories")
